@@ -25,8 +25,8 @@
   "Format POST to be displayed in a buffer."
   (let* ((topic-id (cdr-safe (assoc 'topic_id post)))
          (post-number (cdr-safe (assoc 'post_number post)))
-         (post-url (format "%s/t/%s/%s" discourse-server topic-id post-number))
-         (post-number-propertized (propertize (string post-number) 'discourse-post-nav post-url))
+         (post-num-url (format "<a href=\"%s/t/%s/%s\">%s</a>"
+                           discourse-server topic-id post-number post-number))
          (name (cdr-safe (assoc 'name post)))
          (username (cdr-safe (assoc 'username post)))
          (unseen (cdr-safe (assoc 'unseen post)))
@@ -35,7 +35,7 @@
          (action-code (cdr-safe (assoc 'action_code post)))
          (action-code-who (cdr-safe (assoc 'action_code_who post)))
          (line (format "<h2>%s.<img src=\"%s%s\">%s(%s)</h2> %s<hr>"
-                       post-number
+                       post-num-url
                        discourse-server
                        (string-replace "{size}" "40" avatar-template)
                        name
