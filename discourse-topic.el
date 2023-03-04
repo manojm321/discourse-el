@@ -15,6 +15,10 @@
   (let ((keymap (make-sparse-keymap)))
     ;; Section controls
     (define-key keymap (kbd "q") #'quit-window)
+    (define-key keymap (kbd "n") #'discourse-topic-next-post)
+    (define-key keymap (kbd "p") #'discourse-topic-previous-post)
+    (define-key keymap [?\t] #'shr-next-link)
+    (define-key keymap [?\M-\t] #'shr-previous-link)
 
     keymap)
   "Keymap for `discourse-topic-mode'." )
@@ -65,7 +69,7 @@
           (insert post))
         (insert "\n</body>\n</html>")
         (shr-render-region (point-min) (point-max) topic-buf)
-        (view-mode)
+        (discourse-topic-mode)
         (switch-to-buffer topic-buf)
         (goto-char (point-min))))))
 
@@ -76,6 +80,29 @@
     (if topicid
         (discourse-api-get-topic 'discourse-topic-populate-topic topicid )
       (message "No topic under point"))))
+
+(defun discourse-topic-next-post ()
+  "Jump to next post in a topic"
+  (interactive)
+  (end-of-line)
+  (-when-let* ((sep "-------------------------")
+               (pt (search-forward sep nil t)))
+    (beginning-of-line)))
+
+(defun discourse-topic-previous-post ()
+  "Jump to next post in a topic"
+  (interactive)
+  (-when-let* ((sep "-------------------------")
+               (pt (search-backward sep nil t)))
+    (beginning-of-line)))
+
+;;;###autoload
+(define-derived-mode discourse-topic-mode special-mode "discourse-topic"
+  "Topic mode.
+
+\\{discourse-topic-mode-map}"
+  :group 'discourse
+  (buffer-disable-undo))
 
 (provide 'discourse-topic)
 
