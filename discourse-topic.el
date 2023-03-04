@@ -57,8 +57,10 @@
              (inhibit-read-only t))
         (erase-buffer)
         (insert "<!DOCTYPE html>\n<html>\n<body>\n")
-        (insert (format "<h2>%s: %s </h2><br>posts:%s views:%s tags:%s<hr>"
-                        id title posts-count views tags))
+        (insert (format "<h2> %s </h2><br>posts:%s views:%s tags:%s<hr>"
+                        (format "<a href=\"%s/t/%s/\">%s: %s</a>"
+                           discourse-server id id title)
+                        posts-count views tags))
         (dolist (post fmt-posts)
           (insert post))
         (insert "\n</body>\n</html>")
