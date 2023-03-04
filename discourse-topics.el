@@ -49,7 +49,7 @@
 
 (defun discourse-topics-populate-topics (response)
   "Populate discourse topics RESPONSE."
-  (let* ((buf (get-buffer-create discourse-topics-buffer-name)))
+  (let* ((buf (get-buffer-create "*discourse-topics*")))
     (with-current-buffer buf
         (let* ((topics (cdr-safe (assoc 'topics (assoc 'topic_list response))))
                (topic-lines (mapcar #'discourse-topics--format-topic-line topics))
@@ -60,7 +60,6 @@
                                         "ID" "Posts" "New" "Reply" "Title")
                                 'face 'bold))
             (dolist (topic-line topic-lines)
-              (message topic-line)
               (insert topic-line)
               (insert "\n"))
             (discourse-topics-mode)
