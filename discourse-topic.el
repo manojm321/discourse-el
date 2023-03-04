@@ -26,16 +26,16 @@
   (let* ((topic-id (cdr-safe (assoc 'topic_id post)))
          (post-number (cdr-safe (assoc 'post_number post)))
          (post-url (format "%s/t/%s/%s" discourse-server topic-id post-number))
-         (post-number-propertized post-number 'discourse-post-nav post-url)
+         (post-number-propertized (propertize (string post-number) 'discourse-post-nav post-url))
          (name (cdr-safe (assoc 'name post)))
          (username (cdr-safe (assoc 'username post)))
          (unseen (cdr-safe (assoc 'unseen post)))
          (avatar-template (cdr-safe (assoc 'avatar_template post)))
          (cooked (cdr-safe (assoc 'cooked post)))
-         (action-code (cdr-safe (assoc 'action_code response)))
-         (action-code-who (cdr-safe (assoc 'action_code_who response)))
+         (action-code (cdr-safe (assoc 'action_code post)))
+         (action-code-who (cdr-safe (assoc 'action_code_who post)))
          (line (format "<h2>%s.<img src=\"%s%s\">%s(%s)</h2> %s<hr>"
-                       post-number-propertized
+                       post-number
                        discourse-server
                        (string-replace "{size}" "40" avatar-template)
                        name
