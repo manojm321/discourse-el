@@ -86,14 +86,6 @@
   (interactive)
   (discourse-api-unread-topics 'discourse-topics-populate-topics))
 
-;;;###autoload
-(define-derived-mode discourse-topics-mode special-mode "discourse-topics"
-  "Base mode for Discourse modes.
-
-\\{discourse-topics-mode-map}"
-  :group 'discourse
-  (buffer-disable-undo))
-
 (defun discourse-topics-visit-topic()
   "Visit topic in a browser"
   (interactive)
@@ -107,6 +99,14 @@
          (url (format "%s/t/%s" discourse-server topicid)))
     (kill-new url)
     (message (format "copied: %s" url))))
+
+;;;###autoload
+(define-derived-mode discourse-topics-mode special-mode "discourse-topics"
+  "Base mode for Discourse modes.
+
+\\{discourse-topics-mode-map}"
+  :group 'discourse
+  (buffer-disable-undo))
 
 (provide 'discourse-topics)
 
