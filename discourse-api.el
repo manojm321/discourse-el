@@ -11,8 +11,10 @@
 (defvar discourse-server "http://localhost"
   "Discourse server url.")
 
-(defconst discourse-api-key "some-key" )
-(defconst discourse-username "civilized" )
+(defvar discourse-api-key "some-key"
+  "API key")
+(defvar discourse-username "civilized"
+  "Username")
 
 ;;;; Variables
 ;;;;; Keymap
