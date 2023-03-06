@@ -17,6 +17,15 @@
   "Username")
 
 ;;;; Variables
+(defconst discourse-topics-endpoints '((latest . "/latest.json")
+                                       (new . "/new.json")
+                                       (top . "/top.json")
+                                       (unread . "/unread.json"))
+"Topics endpoint mapping")
+
+(defvar discourse-api--last-call nil
+  "Last api endpoint type that was called")
+
 ;;;;; Keymap
 
 ;;;; Functions
@@ -75,12 +84,13 @@ the result of the call as an argument."
       (sleep-for 0.1))))
 
 
-(defun discourse-api-topics (type cb &rest sync)
+(defun discourse-api-get-topics (type cb &rest sync)
   "Fetch topics and call CB with resulting json string
 
 return value returned by CB, valid when SYNC is set to t."
   (let* ((return nil))
-    (discourse-api-curl-ep "/new.json"
+    (setq discourse-api--last-call type)
+    (discourse-api-curl-ep (cdr (assoc type discourse-topics-endpoints))
                          "GET"
                          (lambda (buf)
                            (let* ((json (with-current-buffer buf
@@ -88,43 +98,6 @@ return value returned by CB, valid when SYNC is set to t."
                                  (setq return (funcall cb json))))
                          nil
                          sync)
-    return))
-
-(defun discourse-api-new-topics (cb &rest sync)
-  "Fetch topics and call CB with resulting json string
-
-return value returned by CB, valid when SYNC is set to t."
-  (let* ((return nil))
-    (discourse-api-curl-ep "/new.json"
-                         "GET"
-                         (lambda (buf)
-                           (let* ((json (with-current-buffer buf
-                                         (json-read-from-string (buffer-string)))))
-                                 (setq return (funcall cb json))))
-                         nil
-                         sync)
-    return))
-
-(defun discourse-api-top-topics (cb)
-  "Fetch top topics and call CB with resulting json string."
-  (discourse-api-curl-ep "/top.json"
-                         "GET"
-                         (lambda (buf)
-                           (let ((json (with-current-buffer buf
-                                         (json-read-from-string (buffer-string)))))
-                             (funcall cb json))))
-
-(defun discourse-api-unread-topics (cb &rest sync)
-  "Fetch unread topics and call CB with resulting json string."
-  (let* ((return nil))
-    (discourse-api-curl-ep "/unread.json"
-                           "GET"
-                           (lambda (buf)
-                             (let* ((json (with-current-buffer buf
-                                           (json-read-from-string (buffer-string)))))
-                               (setq return (funcall cb json))))
-                           nil
-                           sync)
     return))
 
 (defun discourse-api-get-topic (cb topicid)

@@ -9,8 +9,6 @@
 ;;;; Customizations
 
 ;;;; Variables
-(defvar discourse-topics--current-query nil
-  "")
 
 ;;;;; Keymap
 
@@ -81,22 +79,19 @@
 (defun discourse-topics-new ()
   "Display new topics in a buffer."
   (interactive)
-  (setq discourse-topics--current-query #'discourse-topics-new)
-  (discourse-api-new-topics 'discourse-topics-populate-topics))
+  (discourse-api-get-topics 'new 'discourse-topics-populate-topics))
 
 ;;;###autoload
 (defun discourse-topics-top ()
   "Display top topics in a buffer."
   (interactive)
-   (setq discourse-topics--current-query #'discourse-topics-top)
-  (discourse-api-top-topics 'discourse-topics-populate-topics))
+  (discourse-api-get-topics 'top 'discourse-topics-populate-topics))
 
 ;;;###autoload
 (defun discourse-topics-unread ()
   "Display unread topics in a buffer."
   (interactive)
-  (setq discourse-topics--current-query #'discourse-topics-unread)
-  (discourse-api-unread-topics 'discourse-topics-populate-topics))
+  (discourse-api-get-topics 'unread 'discourse-topics-populate-topics))
 
 (defun discourse-topics-visit-topic()
   "Visit topic in a browser"
@@ -115,7 +110,7 @@
 (defun discourse-topics-refresh()
   "Refresh current topics view"
   (interactive)
-  (funcall discourse-topics--current-query))
+  (discourse-api-get-topics discourse-api--last-call 'discourse-topics-populate-topics))
 
 ;;;###autoload
 (define-derived-mode discourse-topics-mode special-mode "discourse-topics"
