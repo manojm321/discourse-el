@@ -9,6 +9,9 @@
 ;;;; Customizations
 
 ;;;; Variables
+(defvar discourse-topics--current-query nil
+  "")
+
 ;;;;; Keymap
 
 ;;;###autoload
@@ -19,6 +22,9 @@
     (define-key keymap (kbd "RET") #'discourse-topic-show-topic)
     (define-key keymap (kbd "w")   #'discourse-topics-copy-topic-url)
     (define-key keymap (kbd "v")   #'discourse-topics-visit-topic)
+    (define-key keymap (kbd "g")   #'discourse-topics-refresh)
+    (define-key keymap (kbd "n")   #'next-line)
+    (define-key keymap (kbd "p")   #'previous-line)
 
     keymap)
   "Keymap for `discourse-topics-mode'." )
@@ -71,19 +77,21 @@
 (defun discourse-topics-latest ()
   "Display latest topics in a buffer."
   (interactive)
+  (setq discourse-topics--current-query #'discourse-topics-latest)
   (discourse-api-latest-topics 'discourse-topics-populate-topics))
-
 
 ;;;###autoload
 (defun discourse-topics-top ()
   "Display top topics in a buffer."
   (interactive)
+   (setq discourse-topics--current-query #'discourse-topics-top)
   (discourse-api-top-topics 'discourse-topics-populate-topics))
 
 ;;;###autoload
 (defun discourse-topics-unread ()
   "Display unread topics in a buffer."
   (interactive)
+  (setq discourse-topics--current-query #'discourse-topics-unread)
   (discourse-api-unread-topics 'discourse-topics-populate-topics))
 
 (defun discourse-topics-visit-topic()
@@ -99,6 +107,11 @@
          (url (format "%s/t/%s" discourse-server topicid)))
     (kill-new url)
     (message (format "copied: %s" url))))
+
+(defun discourse-topics-refresh()
+  "Refresh current topics view"
+  (interactive)
+  (funcall discourse-topics--current-query))
 
 ;;;###autoload
 (define-derived-mode discourse-topics-mode special-mode "discourse-topics"
