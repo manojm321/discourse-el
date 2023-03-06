@@ -1,6 +1,7 @@
 * discourse-el
 mu4e like interface for Discourse
 
+#+html: <p align="center"><img src="1.png" /></p>
 * Installation
 ** with use-package
 git clone this repo and add to load-path
