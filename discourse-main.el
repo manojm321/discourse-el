@@ -46,14 +46,11 @@
 
 (defun discourse-main--buffer ()
   "Draw main buffer."
-  (let* ((buf (get-buffer-create "*discourse-main*"))
-         (image (create-image "/Users/manojm321/.emacs.d/lisp/discourse-el/discourse.svg")))
+  (let* ((buf (get-buffer-create "*discourse-main*")))
     (with-current-buffer buf
       (save-excursion
         (setq inhibit-read-only t)
         (erase-buffer)
-        ;;(remove-images (point-min) (point-max))
-        ;;(put-image image (point-min))
         (insert
          (propertize "* Discourse" 'face 'bold)
          "\n\n"
