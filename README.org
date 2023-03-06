@@ -8,7 +8,11 @@ git clone this repo and add to load-path
 #+begin_src emacs-lisp
   (use-package discourse-main
       :load-path "<path-to-dir>"
-      :bind ("C-c d" . discourse))
+      :bind ("C-c d" . discourse)
+      ;; ideally set these in a secrets.gpg file
+      :config (setq discourse-username "<discourse-username>"
+                    discourse-api-key "<api-key>"
+                    discourse-server "<https://discourse.com>"))
 #+end_src
 
 * License
