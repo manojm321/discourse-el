@@ -71,14 +71,18 @@
             (discourse-topics-mode)
             (switch-to-buffer buf))))))
 
+(defun discourse-topics-count-topics (response)
+  "Return count of topics"
+  (length (cdr-safe (assoc 'topics (assoc 'topic_list response)))))
+
 ;;;;; Commands
 
 ;;;###autoload
-(defun discourse-topics-latest ()
-  "Display latest topics in a buffer."
+(defun discourse-topics-new ()
+  "Display new topics in a buffer."
   (interactive)
-  (setq discourse-topics--current-query #'discourse-topics-latest)
-  (discourse-api-latest-topics 'discourse-topics-populate-topics))
+  (setq discourse-topics--current-query #'discourse-topics-new)
+  (discourse-api-new-topics 'discourse-topics-populate-topics))
 
 ;;;###autoload
 (defun discourse-topics-top ()
