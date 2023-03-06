@@ -33,12 +33,13 @@
       (ignore-errors (delete-process proc))
       (ignore-errors (kill-buffer buf)))))
 
-(defun discourse-api-curl-ep (ep method on-success &optional on-error)
+(defun discourse-api-curl-ep (ep method on-success &optional on-error sync)
   "Curl the endpoint EP with METHOD and call ON-SUCCESS if the exit code is 0.
 
 call ON-ERROR on any other exit code. Both callbacks will receive
 the result of the call as an argument."
   (let* ((buf (generate-new-buffer " discourse"))
+         (proc-finished nil)
          (err-buf (generate-new-buffer " discourse-err"))
          (command (list "curl"
                         "-H" "Content-Type: application/json"
@@ -64,11 +65,14 @@ the result of the call as an argument."
                (if on-error
                    (funcall on-error err-buf)
                  (message (format "%s Failed with exit code %d" command exit-code))))))
-         (discourse-api-process-kill-quietly proc))))
+         (discourse-api-process-kill-quietly proc)
+         (setq proc-finished t))))
 
     ;; Clean up stderr buffer when stdout buffer is killed.
     (with-current-buffer buf
-      (add-hook 'kill-buffer-hook (ignore-errors (kill-buffer err-buf))))))
+      (add-hook 'kill-buffer-hook (ignore-errors (kill-buffer err-buf))))
+    (while (and sync (not proc-finished))
+      (sleep-for 0.1))))
 
 (defun discourse-api-latest-topics (cb)
   "Fetch latest topics and call CB with resulting json string."
@@ -97,7 +101,7 @@ the result of the call as an argument."
                                      (json-read-from-string (buffer-string)))))
                          (funcall cb json)))))
 
-(defun discourse-api-get-topic(cb topicid)
+(defun discourse-api-get-topic (cb topicid)
   "Fetch topic info for TOPICID and call CB with resulting json."
   (discourse-api-curl-ep (format "/t/%s.json" topicid)
                      "GET"
