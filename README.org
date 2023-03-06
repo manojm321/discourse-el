@@ -1,0 +1,19 @@
+* discourse-el
+mu4e like interface for Discourse
+
+* Installation
+** with use-package
+git clone this repo and add to load-path
+#+begin_src emacs-lisp
+  (use-package discourse-main
+      :load-path "<path-to-dir>"
+      :bind ("C-c d" . discourse))
+#+end_src
+
+* License
+
+  [[file:LICENSE][GNU GPLv3.0]]
+
+* Contribute
+
+  Yes please! open github [[https://github.com/manojm321/discourse-el/issues][issues]]
