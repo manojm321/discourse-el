@@ -57,12 +57,12 @@
         (insert
          (propertize "* Discourse" 'face 'bold)
          "\n\n"
-         (propertize "  Basics" 'face 'success)
-         "\n\n"
-         (discourse-main--action-str "\t* [j]ump to some view\n" nil)
-         (discourse-main--action-str "\t* enter a [s]earch query\n" nil)
-         (discourse-main--action-str "\t* [C]ompose a new topic\n" nil)
-         "\n"
+         ;; (propertize "  Basics" 'face 'success)
+         ;; "\n\n"
+         ;; (discourse-main--action-str "\t* [j]ump to some view\n" nil)
+         ;; (discourse-main--action-str "\t* enter a [s]earch query\n" nil)
+         ;; (discourse-main--action-str "\t* [C]ompose a new topic\n" nil)
+         ;; "\n"
          (propertize "  Bookmarks\n\n" 'face 'success)
          (discourse-main--action-str (format "\t* [u]nread topics  %s\n" num-unread)
                                      #'discourse-topics-unread)
