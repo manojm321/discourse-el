@@ -1,6 +1,7 @@
 * discourse-el
-mu4e like interface for Discourse
+mu4e like interface for [[https://www.discourse.org/][Discourse]].
 
+Note: this is pre-alpha and things will break as some refactoring is needed.
 #+html: <p align="center"><img src="1.png" /></p>
 * Installation
 ** with use-package
@@ -14,6 +15,13 @@ git clone this repo and add to load-path
                     discourse-api-key "<api-key>"
                     discourse-server "<https://discourse.com>"))
 #+end_src
+
+* TODOs
+- [X] Mu4e like main view
+- [X] Topic Read view
+- [ ] Mark topic as read
+- [X] Display topic counts
+- [ ] Reply to a topic
 
 * License
 
