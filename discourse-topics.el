@@ -97,7 +97,9 @@
   "Visit topic in a browser"
   (interactive)
   (let* ((topicid (get-text-property (point) 'discourse-nav)))
-    (browse-url (format "%s/t/%s" discourse-server topicid))))
+    (if topicid
+        (browse-url (format "%s/t/%s" discourse-server topicid)))
+    (message "No URL found under point")))
 
 (defun discourse-topics-copy-topic-url()
   "Visit topic in a browser"
