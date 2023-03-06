@@ -2,6 +2,7 @@
 ;;; Code:
 ;;;; Dependencies
 
+(require 'dash)
 (require 'shr)
 (require 'discourse-api)
 
