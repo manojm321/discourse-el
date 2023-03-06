@@ -71,7 +71,7 @@
          (discourse-main--action-str (format "\t* [t]op topics(1w) %s\n" num-top)
                                      #'discourse-topics-top))
         (discourse-main-mode)
-        (pop-to-buffer buf)))))
+        (switch-to-buffer buf)))))
 
 ;;;;; discourse-main-mode functions
 
