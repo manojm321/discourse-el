@@ -47,8 +47,9 @@
 (defun discourse-main--buffer ()
   "Draw main buffer."
   (let* ((buf (get-buffer-create "*discourse-main*"))
-         (num-unread (discourse-api-unread-topics #'discourse-topics-count-topics t))
-         (num-new (discourse-api-new-topics #'discourse-topics-count-topics t)))
+         (num-unread (discourse-api-get-topics 'unread #'discourse-topics-count-topics t))
+         (num-new (discourse-api-get-topics 'new #'discourse-topics-count-topics t))
+         (num-top (discourse-api-get-topics 'top #'discourse-topics-count-topics t)))
     (with-current-buffer buf
       (save-excursion
         (setq inhibit-read-only t)
@@ -63,11 +64,12 @@
          (discourse-main--action-str "\t* [C]ompose a new topic\n" nil)
          "\n"
          (propertize "  Bookmarks\n\n" 'face 'success)
-         (discourse-main--action-str (format "\t* [u]nread topics %s\n" num-unread)
+         (discourse-main--action-str (format "\t* [u]nread topics  %s\n" num-unread)
                                      #'discourse-topics-unread)
-         (discourse-main--action-str (format "\t* [n]ew topics    %s\n" num-new)
+         (discourse-main--action-str (format "\t* [n]ew topics     %s\n" num-new)
                                      #'discourse-topics-new)
-         (discourse-main--action-str "\t* [t]op topics\n" #'discourse-topics-top))
+         (discourse-main--action-str (format "\t* [t]op topics(1w) %s\n" num-top)
+                                     #'discourse-topics-top))
         (discourse-main-mode)
         (pop-to-buffer buf)))))
 
