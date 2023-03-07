@@ -42,7 +42,7 @@
       (ignore-errors (delete-process proc))
       (ignore-errors (kill-buffer buf)))))
 
-(defun discourse-api-curl-ep (ep method on-success &optional on-error sync)
+(defun discourse-api-curl-ep (ep method on-success &optional on-error sync data)
   "Curl the endpoint EP with METHOD and call ON-SUCCESS if the exit code is 0.
 
 call ON-ERROR on any other exit code. Both callbacks will receive
@@ -55,6 +55,7 @@ the result of the call as an argument."
                         "-H" (format "%s: %s" "Api-Key" discourse-api-key)
                         "-H" (format "%s: %s" "Api-Username" discourse-username)
                         "-X" method
+                        (if data (concat "-d " (json-encode data)) "")
                         (concat discourse-server ep))))
     (make-process
      :name "discourse"
@@ -100,6 +101,18 @@ return value returned by CB, valid when SYNC is set to t."
                          sync)
     return))
 
+(defun discourse-api-mark-as-read (topicid)
+  "Mark TOPICID as read"
+  (discourse-api-curl-ep "/topics/timings"
+                     "POST"
+                     (lambda (buf) ())
+                     nil
+                     t
+                     `((topic_id . ,topicid)
+                       ;; dummy timing values, in ms?
+                       (topic_time 2000)
+                       (timings\[1\] . 10))))
+
 (defun discourse-api-get-topic (cb topicid)
   "Fetch topic info for TOPICID and call CB with resulting json."
   (discourse-api-curl-ep (format "/t/%s.json" topicid)
@@ -107,7 +120,8 @@ return value returned by CB, valid when SYNC is set to t."
                      (lambda (buf)
                        (let ((json (with-current-buffer buf
                                      (json-read-from-string (buffer-string)))))
-                         (funcall cb json)))))
+                         (funcall cb json))))
+  (discourse-api-mark-as-read topicid))
 
 (provide 'discourse-api)
 

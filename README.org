@@ -19,9 +19,11 @@ git clone this repo and add to load-path
 * TODOs
 - [X] Mu4e like main view
 - [X] Topic Read view
-- [ ] Mark topic as read
+- [X] Mark topic as read
 - [X] Display topic counts
 - [ ] Reply to a topic
+- [ ] Track topic read time
+- [ ] Show some user stats
 
 * License
 
