@@ -18,13 +18,18 @@ git clone this repo and add to load-path
 
 * TODOs
 - [X] Mu4e like main view
-- [X] Topic Read view
+- [X] add tests
+- [X] Topics view
+- [ ] add tests
 - [X] Mark topic as read
+- [ ] add tests
 - [X] Display topic counts
 - [ ] Reply to a topic
 - [ ] Track topic read time
 - [ ] Show some user stats
-
+- [ ] change watched state
+  - https://github.com/discourse/discourse/blob/main/app/models/notification_level_when_replying_site_setting.rb
+- [ ] fix jump to next and previous post
 * License
 
   [[file:LICENSE][GNU GPLv3.0]]

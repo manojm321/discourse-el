@@ -9,6 +9,8 @@
 ;;;; Customizations
 
 ;;;; Variables
+(defvar discourse-topics-buffer-name "*discourse-topics*"
+  "Name of topics buffer")
 
 ;;;;; Keymap
 
@@ -53,7 +55,7 @@
 
 (defun discourse-topics-populate-topics (response)
   "Populate discourse topics RESPONSE."
-  (let* ((buf (get-buffer-create "*discourse-topics*")))
+  (let* ((buf (get-buffer-create discourse-topics-buffer-name)))
     (with-current-buffer buf
         (let* ((topics (cdr-safe (assoc 'topics (assoc 'topic_list response))))
                (topic-lines (mapcar #'discourse-topics--format-topic-line topics))
