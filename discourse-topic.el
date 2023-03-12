@@ -79,7 +79,21 @@
   (interactive)
   (let* ((topicid (get-text-property (point) 'discourse-nav)))
     (if topicid
-        (discourse-api-get-topic 'discourse-topic-populate-topic topicid )
+        (progn
+          (discourse-topic-mark-as-read)
+          (discourse-api-get-topic 'discourse-topic-populate-topic topicid))
+      (message "No topic under point"))))
+
+;; TODO: integration test
+(defun discourse-topic-mark-as-read ()
+  "Mark as read"
+  (interactive)
+  (let* ((topicid (get-text-property (point) 'discourse-nav)))
+    (if topicid
+        (progn
+          (discourse-api-mark-as-read topicid)
+          (remove-text-properties (line-beginning-position) (line-end-position) '(face bold))
+          (next-line))
       (message "No topic under point"))))
 
 (defun discourse-topic-next-post ()

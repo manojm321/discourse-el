@@ -20,9 +20,9 @@ git clone this repo and add to load-path
 - [X] Mu4e like main view
 - [X] add tests
 - [X] Topics view
-- [ ] add tests
+- [X] add tests
 - [X] Mark topic as read
-- [ ] add tests
+- [ ] add integration tests
 - [X] Display topic counts
 - [ ] Reply to a topic
 - [ ] Track topic read time

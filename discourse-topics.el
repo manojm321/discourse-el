@@ -25,6 +25,7 @@
     (define-key keymap (kbd "g")   #'discourse-topics-refresh)
     (define-key keymap (kbd "n")   #'next-line)
     (define-key keymap (kbd "p")   #'previous-line)
+    (define-key keymap (kbd "r")   #'discourse-topic-mark-as-read)
 
     keymap)
   "Keymap for `discourse-topics-mode'." )
