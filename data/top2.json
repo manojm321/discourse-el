@@ -1,0 +1,38 @@
+{
+  "topic_list": {
+    "topics": [
+      {
+        "id": 238821,
+        "title": "Try out the new sidebar and notification menus!",
+        "fancy_title": "Try out the new sidebar and notification menus!",
+        "slug": "try-out-the-new-sidebar-and-notification-menus",
+        "posts_count": 222,
+        "reply_count": 176,
+        "highest_post_number": 267,
+        "image_url": "https://d11a6trkgmumsb.cloudfront.net/original/4X/f/2/f/f2f67b01b90138659a33b737d7209bc95811c917.png",
+        "created_at": "2022-09-20T14:07:19.673Z",
+        "last_posted_at": "2022-10-19T09:28:08.733Z",
+        "bumped": true,
+        "bumped_at": "2022-10-19T09:28:03.839Z",
+        "archetype": "regular",
+        "unseen": false,
+        "pinned": false,
+        "unpinned": null,
+        "visible": true,
+        "closed": true,
+        "archived": false,
+        "bookmarked": null,
+        "liked": null,
+        "tags_descriptions": {},
+        "views": 10726,
+        "like_count": 1164,
+        "has_summary": true,
+        "last_poster_username": "JammyDodger",
+        "category_id": 67,
+        "pinned_globally": false,
+        "featured_link": null,
+        "has_accepted_answer": false
+      }
+    ]
+  }
+}
