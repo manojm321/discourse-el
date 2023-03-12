@@ -11,9 +11,9 @@ git clone this repo and add to load-path
       :load-path "<path-to-dir>"
       :bind ("C-c d" . discourse)
       ;; ideally set these in a secrets.gpg file
-      :config (setq discourse-username "<discourse-username>"
+      :config (setq discourse-api-username "<discourse-username>"
                     discourse-api-key "<api-key>"
-                    discourse-server "<https://discourse.com>"))
+                    discourse-api-server "<https://discourse.com>"))
 #+end_src
 
 * TODOs

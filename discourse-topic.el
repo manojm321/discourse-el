@@ -34,7 +34,7 @@
   (let* ((topic-id (cdr-safe (assoc 'topic_id post)))
          (post-number (cdr-safe (assoc 'post_number post)))
          (post-num-url (format "<a href=\"%s/t/%s/%s\">%s</a>"
-                           discourse-server topic-id post-number post-number))
+                           discourse-api-server topic-id post-number post-number))
          (name (cdr-safe (assoc 'name post)))
          (username (cdr-safe (assoc 'username post)))
          (unseen (cdr-safe (assoc 'unseen post)))
@@ -44,7 +44,7 @@
          (action-code-who (cdr-safe (assoc 'action_code_who post)))
          (line (format "<h2>%s.<img src=\"%s%s\">%s(%s)</h2> %s<hr>"
                        post-num-url
-                       discourse-server
+                       discourse-api-server
                        (string-replace "{size}" "40" avatar-template)
                        name
                        username
@@ -67,7 +67,7 @@
         (insert "<!DOCTYPE html>\n<html>\n<body>\n")
         (insert (format "<h2>%s</h2>posts:%s views:%s tags:%s<hr>"
                         (format "<a href=\"%s/t/%s/\">%s: %s</a>"
-                           discourse-server id id title)
+                           discourse-api-server id id title)
                         posts-count views tags))
         (dolist (post fmt-posts)
           (insert post))

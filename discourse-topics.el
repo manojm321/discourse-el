@@ -101,14 +101,14 @@
   (interactive)
   (let* ((topicid (get-text-property (point) 'discourse-nav)))
     (if topicid
-        (browse-url (format "%s/t/%s" discourse-server topicid)))
+        (browse-url (format "%s/t/%s" discourse-api-server topicid)))
     (message "No URL found under point")))
 
 (defun discourse-topics-copy-topic-url()
   "Visit topic in a browser"
   (interactive)
   (let* ((topicid (get-text-property (point) 'discourse-nav))
-         (url (format "%s/t/%s" discourse-server topicid)))
+         (url (format "%s/t/%s" discourse-api-server topicid)))
     (kill-new url)
     (message (format "copied: %s" url))))
 

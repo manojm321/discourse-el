@@ -1,4 +1,15 @@
-;;; -*- lexical-binding: t; -*-
+;;; discourse-api.el -*- lexical-binding: t; -*-
+
+;; Copyright (C) 2023  Manoj Kumar Manikchand
+
+;; Author: Manoj Kumar Manikchand
+;; URL: http://github.com/manojm321/discourse-el
+;; Keywords: tools
+;; Package-Requires: ((emacs "25.1"))
+
+;;; Commentary:
+;; Functions dealing with discourse API
+
 ;;; Code:
 ;;;; Dependencies
 
@@ -8,16 +19,16 @@
 ;;; Options
 ;;;; Customizations
 
-(defvar discourse-server "http://localhost"
+(defvar discourse-api-server "http://localhost"
   "Discourse server url.")
 
 (defvar discourse-api-key "some-key"
   "API key")
-(defvar discourse-username "civilized"
+(defvar discourse-api-username "civilized"
   "Username")
 
 ;;;; Variables
-(defconst discourse-topics-endpoints '((latest . "/latest.json")
+(defconst discourse-api-topics-endpoints '((latest . "/latest.json")
                                        (new . "/new.json")
                                        (top . "/top.json")
                                        (unread . "/unread.json"))
@@ -56,7 +67,7 @@ the result of the call as an argument."
                         "-H" (format "%s: %s" "Api-Username" discourse-username)
                         "-X" method
                         (if data (concat "-d " (json-encode data)) "")
-                        (concat discourse-server ep))))
+                        (concat discourse-api-server ep))))
     (make-process
      :name "discourse"
      :buffer buf
@@ -91,7 +102,7 @@ the result of the call as an argument."
 return value returned by CB, valid when SYNC is set to t."
   (let* ((return nil))
     (setq discourse-api--last-call type)
-    (discourse-api-curl-ep (cdr (assoc type discourse-topics-endpoints))
+    (discourse-api-curl-ep (cdr (assoc type discourse-api-topics-endpoints))
                          "GET"
                          (lambda (buf)
                            (let* ((json (with-current-buffer buf
