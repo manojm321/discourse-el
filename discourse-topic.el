@@ -9,6 +9,9 @@
 ;;;; Customizations
 
 ;;;; Variables
+(defvar discourse-topic-buffer-name "*discourse-topic*"
+  "Name of topic buffer")
+
 ;;;;; Keymap
 
 ;;;###autoload
@@ -50,7 +53,7 @@
 
 (defun discourse-topic-populate-topic (topic)
   "Populate TOPIC into a buffer and switch to it."
-  (let* ((topic-buf (get-buffer-create "*discourse topic info*")))
+  (let* ((topic-buf (get-buffer-create discourse-topic-buffer-name)))
     (with-current-buffer topic-buf
       (let* ((posts (cdr-safe (assoc 'posts (assoc 'post_stream topic))))
              (fmt-posts (mapcar #'discourse-topic--format-post posts))
@@ -62,7 +65,7 @@
              (inhibit-read-only t))
         (erase-buffer)
         (insert "<!DOCTYPE html>\n<html>\n<body>\n")
-        (insert (format "<h2> %s </h2><br>posts:%s views:%s tags:%s<hr>"
+        (insert (format "<h2>%s</h2>posts:%s views:%s tags:%s<hr>"
                         (format "<a href=\"%s/t/%s/\">%s: %s</a>"
                            discourse-server id id title)
                         posts-count views tags))
