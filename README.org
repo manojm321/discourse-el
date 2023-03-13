@@ -1,5 +1,6 @@
 * discourse-el
-[[https://github.com/manojm321/discourse-el/workflows/check/badge.svg][build]]
+[[https://github.com/manojm321/discourse-el/actions][file:https://github.com/manojm321/discourse-el/workflows/check/badge.svg]] [[http://www.gnu.org/licenses/gpl-3.0.txt][file:https://img.shields.io/badge/license-GPL_v3-green.svg]]
+
 mu4e like interface for [[https://www.discourse.org/][Discourse]].
 
 Note: this is pre-alpha and things will break as some refactoring is needed.
@@ -22,6 +23,8 @@ git clone this repo and add to load-path
 - [X] add tests
 - [X] Topics view
 - [X] add tests
+- [X] Topic view
+- [ ] Add tests
 - [X] Mark topic as read
 - [ ] add integration tests
 - [X] Display topic counts
