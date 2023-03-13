@@ -15,7 +15,8 @@ jobs:
         emacs_version:
           - 28.1
           - 28.2
-        ignore_warnings: true
+        ignore_warnings:
+          - true
     steps:
     - uses: actions/checkout@v3
     - uses: purcell/setup-emacs@master
