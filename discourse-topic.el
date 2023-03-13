@@ -81,7 +81,6 @@
         (dolist (post fmt-posts)
           (insert post))
         (insert "\n</body>\n</html>")
-        (shr-render-region (point-min) (point-max) topic-buf)
         (discourse-topic-mode)
         (switch-to-buffer topic-buf)
         (goto-char (point-min))))))
@@ -129,6 +128,7 @@
 
 \\{discourse-topic-mode-map}"
   :group 'discourse
+  (shr-render-region (point-min) (point-max))
   (buffer-disable-undo))
 
 (provide 'discourse-topic)

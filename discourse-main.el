@@ -29,7 +29,7 @@
     (define-key keymap (kbd "u") #'discourse-topics-unread)
     (define-key keymap (kbd "n") #'discourse-topics-new)
     (define-key keymap (kbd "t") #'discourse-topics-top)
-    (define-key keymap (kbd "g") #'discourse)
+    (define-key keymap (kbd "g") #'discourse-main)
 
     keymap)
   "Keymap for `discourse-main-mode'." )
