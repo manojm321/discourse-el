@@ -5,7 +5,7 @@
 ;; Author: Manoj Kumar Manikchand
 ;; URL: http://github.com/manojm321/discourse-el
 ;; Keywords: tools
-;; Package-Requires: ((emacs "25.1"))
+;; Package-Requires: ((emacs "28.1") (dash "2.19"))
 ;; Version: 0.0.1
 
 ;;; Commentary:
