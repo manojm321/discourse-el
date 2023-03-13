@@ -1,7 +1,8 @@
 * discourse-el
 [[https://github.com/manojm321/discourse-el/actions][file:https://github.com/manojm321/discourse-el/workflows/check/badge.svg]] [[http://www.gnu.org/licenses/gpl-3.0.txt][file:https://img.shields.io/badge/license-GPL_v3-green.svg]]
 
-mu4e like interface for [[https://www.discourse.org/][Discourse]].
+[[https://www.djcbsoftware.nl/code/mu/mu4e.html][mu4e]] like interface for [[https://www.discourse.org/][Discourse]]. Why mu4e like? I use mu4e heavily and I don't
+want to learn a new interface.
 
 Note: this is pre-alpha and things will break as some refactoring is needed.
 #+html: <p align="center"><img src="1.png" /></p>
@@ -24,7 +25,7 @@ git clone this repo and add to load-path
 - [X] Topics view
 - [X] add tests
 - [X] Topic view
-- [ ] Add tests
+- [X] Add tests
 - [X] Mark topic as read
 - [ ] add integration tests
 - [X] Display topic counts
