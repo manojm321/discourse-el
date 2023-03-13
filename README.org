@@ -35,6 +35,8 @@ git clone this repo and add to load-path
   - https://github.com/discourse/discourse/blob/main/app/models/notification_level_when_replying_site_setting.rb
 - [ ] fix jump to next and previous post
 - [X] CI checks
+- [ ] assigned to me
+
 * License
 
   [[file:LICENSE][GNU GPLv3.0]]

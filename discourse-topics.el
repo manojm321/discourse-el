@@ -18,9 +18,26 @@
 
 ;;;; Customizations
 
-;;;; Variables
+;;;;; Variables
 (defvar discourse-topics-buffer-name "*discourse-topics*"
   "Name of topics buffer")
+
+;;;;; Faces
+(defgroup discourse-faces nil
+  "Type faces (fonts) used in Discourse."
+  :group 'discourse
+  :group 'faces)
+
+(defface discourse-new-face
+  '((t :inherit font-lock-keyword-face :weight bold))
+  "Face for a new topic title."
+  :group 'discourse-faces)
+
+(defface discourse-topics-highlight-face
+  `((t :inherit hl-line :weight bold :underline t
+       ,@(and (>= emacs-major-version 27) '(:extend t))))
+  "Face for the header at point."
+  :group 'discourse-faces)
 
 ;;;;; Keymap
 
@@ -59,7 +76,7 @@
                 title))
         (line (propertize line 'discourse-nav id)))
     (if (eq unseen 't)
-        (setq line (propertize line 'face 'bold)))
+        (setq line (propertize line 'face 'discourse-new-face)))
     (if (eq closed 't)
         (setq line (propertize line 'face 'shadow)))
       line))
@@ -73,14 +90,15 @@
                (inhibit-read-only t))
           (save-excursion
             (erase-buffer)
-            (insert (propertize (format "%-8s %-5s %-3s %-5s %-60s\n"
-                                        "ID" "Posts" "New" "Reply" "Title")
-                                'face 'bold))
+            (insert (format "%-8s %-5s %-3s %-5s %-60s\n"
+                            "ID" "Posts" "New" "Reply" "Title"))
             (dolist (topic-line topic-lines)
               (insert topic-line)
               (insert "\n"))
             (discourse-topics-mode)
-            (switch-to-buffer buf))))))
+            (hl-line-mode 1)
+            (switch-to-buffer buf))
+          (next-line)))))
 
 (defun discourse-topics-count-topics (response)
   "Return count of topics"
@@ -133,7 +151,10 @@
 
 \\{discourse-topics-mode-map}"
   :group 'discourse
-  (buffer-disable-undo))
+  (buffer-disable-undo)
+  (setq truncate-lines t
+        overwrite-mode nil)
+  (set (make-local-variable 'hl-line-face) 'discourse-topics-highlight-face))
 
 (provide 'discourse-topics)
 
