@@ -12,6 +12,9 @@
 ;; Tests for discourse-topic.el
 
 ;;; Code:
+;;;; Dependencies
+(require 'ert)
+(require 'discourse-topic)
 
 (ert-deftest discourse-topic-tests-populate-topic ()
   "Test topic rendering."
