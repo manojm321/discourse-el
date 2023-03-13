@@ -1,4 +1,4 @@
-;;; discourse-api.el -*- lexical-binding: t; -*-
+;;; discourse-api.el --- API interaction -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2023  Manoj Kumar Manikchand
 
@@ -6,6 +6,7 @@
 ;; URL: http://github.com/manojm321/discourse-el
 ;; Keywords: tools
 ;; Package-Requires: ((emacs "25.1"))
+;; Version: 0.0.1
 
 ;;; Commentary:
 ;; Functions dealing with discourse API
@@ -23,19 +24,19 @@
   "Discourse server url.")
 
 (defvar discourse-api-key "some-key"
-  "API key")
+  "API key.")
 (defvar discourse-api-username "civilized"
-  "Username")
+  "Username.")
 
 ;;;; Variables
 (defconst discourse-api-topics-endpoints '((latest . "/latest.json")
                                        (new . "/new.json")
                                        (top . "/top.json")
                                        (unread . "/unread.json"))
-"Topics endpoint mapping")
+"Topics endpoint mapping.")
 
 (defvar discourse-api--last-call nil
-  "Last api endpoint type that was called")
+  "Last api endpoint type that was called.")
 
 ;;;;; Keymap
 
@@ -56,8 +57,10 @@
 (defun discourse-api-curl-ep (ep method on-success &optional on-error sync data)
   "Curl the endpoint EP with METHOD and call ON-SUCCESS if the exit code is 0.
 
-call ON-ERROR on any other exit code. Both callbacks will receive
-the result of the call as an argument."
+call ON-ERROR on any other exit code.  Both callbacks will receive
+the result of the call as an argument.  Set SYNC to wait for the
+call to complete.  DATA will be encoded into json before pass to
+-d option"
   (let* ((buf (generate-new-buffer " discourse"))
          (proc-finished nil)
          (err-buf (generate-new-buffer " discourse-err"))
@@ -95,9 +98,8 @@ the result of the call as an argument."
     (while (and sync (not proc-finished))
       (sleep-for 0.1))))
 
-
 (defun discourse-api-get-topics (type cb &rest sync)
-  "Fetch topics and call CB with resulting json string
+  "Fetch topics of TYPE and call CB with resulting json string.
 
 return value returned by CB, valid when SYNC is set to t."
   (let* ((return nil))
@@ -113,15 +115,15 @@ return value returned by CB, valid when SYNC is set to t."
     return))
 
 (defun discourse-api-mark-as-read (topicid)
-  "Mark TOPICID as read"
+  "Mark TOPICID as read."
   (discourse-api-curl-ep "/topics/timings"
                      "POST"
-                     (lambda (buf) ())
+                     (lambda (_) ())
                      nil
                      t
                      `((topic_id . ,topicid)
                        ;; dummy timing values, in ms?
-                       (topic_time 2000)
+                       (topic_time . 2000)
                        (timings\[1\] . 10))))
 
 (defun discourse-api-get-topic (cb topicid)

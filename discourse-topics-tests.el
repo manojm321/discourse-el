@@ -1,10 +1,21 @@
-;;; Code:
+;;; discourse-topics-tests.el --- Topic tests -*- lexical-binding: t; -*-
+
+;; Copyright (C) 2023  Manoj Kumar Manikchand
+
+;; Author: Manoj Kumar Manikchand
+;; URL: http://github.com/manojm321/discourse-el
+;; Keywords: tools
+;; Package-Requires: ((emacs "25.1"))
+;; Version: 0.0.1
+
+;;; Commentary:
+;; Tests for discourse-topics.el
 
 (require 'ert)
 (require 'discourse-topics)
 
-(ert-deftest test-discourse-topics-populate-topics ()
-  "Tests that the topics buffer contains title and topics"
+(ert-deftest discourse-topics-tests-populate-topics ()
+  "Topics buffer must contain title and a set of topics."
   (let* ((file (expand-file-name "data/top.json")))
     (with-temp-buffer
       (insert-file-contents file)
@@ -16,8 +27,8 @@
       (should (equal actual-title title))
       (should (equal 51  (count-lines (point-min) (point-max)))))))
 
-(ert-deftest test-discourse-topics-populate-topics-2 ()
-  "Test that closed topics are greyed out"
+(ert-deftest discourse-topics-tests-populate-topics-2 ()
+  "Closed topics must be greyed out."
   (let* ((file (expand-file-name "data/top.json")))
     (with-temp-buffer
       (insert-file-contents file)
@@ -35,8 +46,8 @@
       (setq actual-line (buffer-substring start (point)))
       (should (ert-equal-including-properties actual-line expected-line)))))
 
-(ert-deftest test-discourse-topics-populate-topics-3 ()
-  "Test that unread topics are bold"
+(ert-deftest discourse-topics-tests-populate-topics-3 ()
+  "Unread topics must be bold."
   (let* ((file (expand-file-name "data/top.json")))
     (with-temp-buffer
       (insert-file-contents file)

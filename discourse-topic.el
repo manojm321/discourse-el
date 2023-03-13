@@ -1,4 +1,16 @@
-;;; -*- lexical-binding: t; -*-
+;;; discourse-topic.el --- Topic interaction -*- lexical-binding: t; -*-
+
+;; Copyright (C) 2023  Manoj Kumar Manikchand
+
+;; Author: Manoj Kumar Manikchand
+;; URL: http://github.com/manojm321/discourse-el
+;; Keywords: tools
+;; Package-Requires: ((emacs "28.1") (dash "2.19"))
+;; Version: 0.0.1
+
+;;; Commentary:
+;; Functions dealing with a single discourse topic
+
 ;;; Code:
 ;;;; Dependencies
 
@@ -10,7 +22,7 @@
 
 ;;;; Variables
 (defvar discourse-topic-buffer-name "*discourse-topic*"
-  "Name of topic buffer")
+  "Name of topic buffer.")
 
 ;;;;; Keymap
 
@@ -37,11 +49,8 @@
                            discourse-api-server topic-id post-number post-number))
          (name (cdr-safe (assoc 'name post)))
          (username (cdr-safe (assoc 'username post)))
-         (unseen (cdr-safe (assoc 'unseen post)))
          (avatar-template (cdr-safe (assoc 'avatar_template post)))
          (cooked (cdr-safe (assoc 'cooked post)))
-         (action-code (cdr-safe (assoc 'action_code post)))
-         (action-code-who (cdr-safe (assoc 'action_code_who post)))
          (line (format "<h2>%s.<img src=\"%s%s\">%s(%s)</h2> %s<hr>"
                        post-num-url
                        discourse-api-server
@@ -89,18 +98,18 @@
 
 ;; TODO: integration test
 (defun discourse-topic-mark-as-read ()
-  "Mark as read"
+  "Mark as read."
   (interactive)
   (let* ((topicid (get-text-property (point) 'discourse-nav)))
     (if topicid
         (progn
           (discourse-api-mark-as-read topicid)
           (remove-text-properties (line-beginning-position) (line-end-position) '(face bold))
-          (next-line))
+          (forward-line))
       (message "No topic under point"))))
 
 (defun discourse-topic-next-post ()
-  "Jump to next post in a topic"
+  "Jump to next post in a topic."
   (interactive)
   (end-of-line)
   (-when-let* ((sep "-------------------------")
@@ -108,7 +117,7 @@
     (beginning-of-line)))
 
 (defun discourse-topic-previous-post ()
-  "Jump to next post in a topic"
+  "Jump to next post in a topic."
   (interactive)
   (-when-let* ((sep "-------------------------")
                (pt (search-backward sep nil t)))

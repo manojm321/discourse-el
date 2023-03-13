@@ -9,7 +9,7 @@ git clone this repo and add to load-path
 #+begin_src emacs-lisp
   (use-package discourse-main
       :load-path "<path-to-dir>"
-      :bind ("C-c d" . discourse)
+      :bind ("C-c d" . discourse-main)
       ;; ideally set these in a secrets.gpg file
       :config (setq discourse-api-username "<discourse-username>"
                     discourse-api-key "<api-key>"
@@ -30,6 +30,7 @@ git clone this repo and add to load-path
 - [ ] change watched state
   - https://github.com/discourse/discourse/blob/main/app/models/notification_level_when_replying_site_setting.rb
 - [ ] fix jump to next and previous post
+- [X] CI checks
 * License
 
   [[file:LICENSE][GNU GPLv3.0]]

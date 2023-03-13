@@ -3,7 +3,10 @@
 ;; Copyright (C) 2023  Manoj Kumar Manikchand
 
 ;; Author: Manoj Kumar Manikchand
-;; Keywords: extensions, tools
+;; URL: http://github.com/manojm321/discourse-el
+;; Keywords: tools
+;; Package-Requires: ((emacs "25.1"))
+;; Version: 0.0.1
 
 ;;; Commentary:
 ;; A mu4e like interface for Discourse
@@ -32,7 +35,7 @@
   "Keymap for `discourse-main-mode'." )
 
 (defun discourse-main--action-str (str func)
-  "Highlight the key str"
+  "Highlight the key STR and bind FUNC to it."
   (let* ((newstr (replace-regexp-in-string
                   "\\[\\(..?\\)\\]"
                   (lambda(m)
@@ -76,8 +79,8 @@
 ;;;;; discourse-main-mode functions
 
 ;;;###autoload
-(defun discourse ()
-  "main function."
+(defun discourse-main ()
+  "Main function."
   (interactive)
   (discourse-main--buffer))
 

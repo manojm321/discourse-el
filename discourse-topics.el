@@ -1,4 +1,14 @@
-;;; -*- lexical-binding: t; -*-
+;;; discourse-topics.el --- Interaction with a set of topics  -*- lexical-binding: t; -*-
+
+;; Author: Manoj Kumar Manikchand
+;; URL: http://github.com/manojm321/discourse-el
+;; Keywords: tools
+;; Package-Requires: ((emacs "25.1"))
+;; Version: 0.0.1
+
+;;; Commentary:
+;; Functions dealing with a set of topics
+
 ;;; Code:
 ;;;; Dependencies
 
