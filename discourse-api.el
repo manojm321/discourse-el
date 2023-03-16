@@ -126,15 +126,19 @@ return value returned by CB, valid when SYNC is set to t."
                        (topic_time . 2000)
                        (timings\[1\] . 10))))
 
-(defun discourse-api-get-topic (cb topicid)
+(defun discourse-api-get-topic (cb topicid &rest sync)
   "Fetch topic info for TOPICID and call CB with resulting json."
-  (discourse-api-curl-ep (format "/t/%s.json" topicid)
-                     "GET"
-                     (lambda (buf)
-                       (let ((json (with-current-buffer buf
-                                     (json-read-from-string (buffer-string)))))
-                         (funcall cb json))))
-  (discourse-api-mark-as-read topicid))
+  (let* ((return nil))
+    (discourse-api-curl-ep (format "/t/%s.json" topicid)
+                           "GET"
+                           (lambda (buf)
+                             (let ((json (with-current-buffer buf
+                                           (json-read-from-string (buffer-string)))))
+                                 (setq return (funcall cb json))))
+                         nil
+                         sync)
+    (discourse-api-mark-as-read topicid)
+    return))
 
 (provide 'discourse-api)
 

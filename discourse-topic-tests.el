@@ -24,14 +24,43 @@
       (discourse-topic-populate-topic (json-read-from-string (buffer-string)))))
 
   (with-current-buffer discourse-topic-buffer-name
-    (should (equal major-mode 'discourse-topic-mode))
-    (let* ((expected-line "238821: Try out the new sidebar and notification menus!")
-           (actual-line (buffer-substring-no-properties (point-min) (line-end-position))))
-      (should (equal actual-line expected-line)))
-    (forward-line 2)
-    (let* ((expected-line "posts:222 views:10785 tags:[sidebar new-feature notifications]")
-           (actual-line (buffer-substring-no-properties (point) (line-end-position))))
-      (should (equal actual-line expected-line)))))
+    (let* ((dom (libxml-parse-html-region (point-min) (point-max)))
+           (expected-line1 "238821: Try out the new sidebar and notification menus!")
+           (expected-line2 "posts:222 views:10785 tags:[sidebar new-feature notifications]")
+           ;; first node will be '(a ((href
+           ;; . "https://nil/t/238821/")) "238821: Try out the
+           ;; new sidebar and notification menus!")
+           (actual-line1 (dom-text (car (dom-by-tag dom 'a))))
+           "(div nil posts:222 views:10785 tags:[sidebar new-feature notifications])"
+           (actual-line2 (dom-text (car (dom-by-tag dom 'div)))))
+      (should (equal actual-line1 expected-line1))
+      (should (equal actual-line2 expected-line2)))))
+
+(ert-deftest discourse-topic-tests-populate-topic2 ()
+  "Disable avatar rendering"
+  (let* ((file (expand-file-name "data/238821.json")))
+    (setq discourse-topic-load-avatar nil)
+    (with-temp-buffer
+      (insert-file-contents file)
+      (discourse-topic-populate-topic (json-read-from-string (buffer-string)))))
+
+  (with-current-buffer discourse-topic-buffer-name
+    (let* ((dom (libxml-parse-html-region (point-min) (point-max)))
+           (img-node (dom-child-by-tag (nth 1 (dom-by-tag dom 'h2)) 'img)))
+      (should-not img-node))))
+
+(ert-deftest discourse-topic-tests-populate-topic3 ()
+  "Enable avatar rendering"
+  (let* ((file (expand-file-name "data/238821.json")))
+    (setq discourse-topic-load-avatar t)
+    (with-temp-buffer
+      (insert-file-contents file)
+      (discourse-topic-populate-topic (json-read-from-string (buffer-string)))))
+
+  (with-current-buffer discourse-topic-buffer-name
+    (let* ((dom (libxml-parse-html-region (point-min) (point-max)))
+           (img-node (dom-child-by-tag (nth 1 (dom-by-tag dom 'h2)) 'img)))
+      (should img-node))))
 
 (provide 'discourse-topic-tests)
 

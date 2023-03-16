@@ -24,6 +24,9 @@
 (defvar discourse-topic-buffer-name "*discourse-topic*"
   "Name of topic buffer.")
 
+(defvar discourse-topic-load-avatar t
+  "Set to nil for faster topic load.")
+
 ;;;;; Keymap
 
 ;;;###autoload
@@ -50,11 +53,13 @@
          (name (cdr-safe (assoc 'name post)))
          (username (cdr-safe (assoc 'username post)))
          (avatar-template (cdr-safe (assoc 'avatar_template post)))
+         (avatar-url (format "<img src=\"%s%s\">"
+                             discourse-api-server
+                             (string-replace "{size}" "40" avatar-template)))
          (cooked (cdr-safe (assoc 'cooked post)))
-         (line (format "<h2>%s.<img src=\"%s%s\">%s(%s)</h2> %s<hr>"
+         (line (format "<h2>%s.%s%s(%s)</h2> %s<hr>"
                        post-num-url
-                       discourse-api-server
-                       (string-replace "{size}" "40" avatar-template)
+                       (if discourse-topic-load-avatar avatar-url "")
                        name
                        username
                        cooked)))
@@ -74,16 +79,13 @@
              (inhibit-read-only t))
         (erase-buffer)
         (insert "<!DOCTYPE html>\n<html>\n<body>\n")
-        (insert (format "<h2>%s</h2>posts:%s views:%s tags:%s<hr>"
+        (insert (format "<h2>%s</h2><div>posts:%s views:%s tags:%s</div><hr>"
                         (format "<a href=\"%s/t/%s/\">%s: %s</a>"
                            discourse-api-server id id title)
                         posts-count views tags))
         (dolist (post fmt-posts)
           (insert post))
-        (insert "\n</body>\n</html>")
-        (discourse-topic-mode)
-        (switch-to-buffer topic-buf)
-        (goto-char (point-min))))))
+        (insert "\n</body>\n</html>")))))
 
 (defun discourse-topic-show-topic ()
   "Show topic under point."
@@ -92,7 +94,11 @@
     (if topicid
         (progn
           (discourse-topic-mark-as-read)
-          (discourse-api-get-topic 'discourse-topic-populate-topic topicid))
+          (discourse-api-get-topic 'discourse-topic-populate-topic topicid t)
+          (with-current-buffer discourse-topic-buffer-name
+            (discourse-topic-mode)
+            (switch-to-buffer discourse-topic-buffer-name)
+            (goto-char (point-min))))
       (message "No topic under point"))))
 
 ;; TODO: integration test

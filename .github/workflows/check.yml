@@ -29,6 +29,4 @@ jobs:
     - uses: leotaku/elisp-check@master
       with:
         check: ert
-        # skip discourse-topic-tests.el for now, not sure why it fails in
-        # --batch mode. Maybe shr requries works only in interactive mode.
-        file: 'discourse-topics-tests.el'
+        file: '*-tests.el'
