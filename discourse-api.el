@@ -67,7 +67,7 @@ call to complete.  DATA will be encoded into json before pass to
          (command (list "curl"
                         "-H" "Content-Type: application/json"
                         "-H" (format "%s: %s" "Api-Key" discourse-api-key)
-                        "-H" (format "%s: %s" "Api-Username" discourse-username)
+                        "-H" (format "%s: %s" "Api-Username" discourse-api-username)
                         "-X" method
                         (if data (concat "-d " (json-encode data)) "")
                         (concat discourse-api-server ep))))
