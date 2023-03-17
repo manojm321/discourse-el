@@ -23,21 +23,21 @@
   "Name of topics buffer")
 
 ;;;;; Faces
-(defgroup discourse-faces nil
-  "Type faces (fonts) used in Discourse."
+(defgroup discourse-topics-faces nil
+  "Type faces (fonts) used in Discourse topics."
   :group 'discourse
   :group 'faces)
 
-(defface discourse-new-face
+(defface discourse-topics-new-face
   '((t :inherit font-lock-keyword-face :weight bold))
   "Face for a new topic title."
-  :group 'discourse-faces)
+  :group 'discourse-topics-faces)
 
 (defface discourse-topics-highlight-face
   `((t :inherit hl-line :weight bold :underline t
        ,@(and (>= emacs-major-version 27) '(:extend t))))
   "Face for the header at point."
-  :group 'discourse-faces)
+  :group 'discourse-topics-faces)
 
 ;;;;; Keymap
 
@@ -76,7 +76,7 @@
                 title))
         (line (propertize line 'discourse-nav id)))
     (if (eq unseen 't)
-        (setq line (propertize line 'face 'discourse-new-face)))
+        (setq line (propertize line 'face 'discourse-topics-new-face)))
     (if (eq closed 't)
         (setq line (propertize line 'face 'shadow)))
       line))

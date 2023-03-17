@@ -56,7 +56,8 @@
   (with-current-buffer discourse-topics-buffer-name
     (let* ((topic-id 253588)
            (text "253588   19    0   3     Sam Saffron and Sarah Hawk named Discourse Co-CEOs          ")
-           (expected-line (propertize text 'discourse-nav topic-id 'face 'discourse-new-face)))
+           (expected-line (propertize text 'discourse-nav topic-id
+                                      'face 'discourse-topics-new-face)))
       (goto-char (point-min))
       (search-forward (format "%s" topic-id))
       (beginning-of-line)
