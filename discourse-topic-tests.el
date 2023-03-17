@@ -31,7 +31,7 @@
            ;; . "https://nil/t/238821/")) "238821: Try out the
            ;; new sidebar and notification menus!")
            (actual-line1 (dom-text (car (dom-by-tag dom 'a))))
-           "(div nil posts:222 views:10785 tags:[sidebar new-feature notifications])"
+           ;; "(div nil posts:222 views:10785 tags:[sidebar new-feature notifications])"
            (actual-line2 (dom-text (car (dom-by-tag dom 'div)))))
       (should (equal actual-line1 expected-line1))
       (should (equal actual-line2 expected-line2)))))
