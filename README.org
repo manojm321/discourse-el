@@ -19,6 +19,22 @@ git clone this repo and add to load-path
                     discourse-api-server "<https://discourse.com>"))
 #+end_src
 
+** Capture discourse topic as org-mode todo
+#+begin_src emacs-lisp
+  (defun my-capture-discourse ()
+    (let* ((topic (discourse-topic-get-topic-at-point))
+           (id (cdr-safe (assoc 'id topic)))
+           (title (cdr-safe (assoc 'title topic)))
+           (tags "support")
+           (link (format "%s/t/%s" discourse-api-server id)))
+
+      (format "* TODO %s: %s \t:%s%%^g: \n\s\s:PROPERTIES:\n\s\s:URL: %s\n\s\s:END:\n"
+              id title tags link)))
+
+  (setq org-capture-templates
+        '(("d" "Capture discourse topic as TODO" entry (file "~/path/to/my/todo.org")
+           (function my-capture-discourse) :empty-lines-after 2 :prepend t)))
+#+end_src
 * TODOs
 - [X] Mu4e like main view
 - [X] add tests
@@ -27,15 +43,16 @@ git clone this repo and add to load-path
 - [X] Topic view
 - [X] Add tests
 - [X] Mark topic as read
-- [ ] add integration tests
+- [X] capture topic to org mode task
 - [X] Display topic counts
+- [X] CI checks
+- [ ] add integration tests
 - [ ] Reply to a topic
 - [ ] Track topic read time
 - [ ] Show some user stats
-- [ ] change watched state
+- [ ] change topic state
   - https://github.com/discourse/discourse/blob/main/app/models/notification_level_when_replying_site_setting.rb
 - [ ] fix jump to next and previous post
-- [X] CI checks
 - [ ] assigned to me
 
 * License

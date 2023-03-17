@@ -95,10 +95,24 @@
         (progn
           (discourse-topic-mark-as-read)
           (discourse-api-get-topic 'discourse-topic-populate-topic topicid t)
+          ;; this is a bit ugly. Ideally next 4 lines should be part of
+          ;; -populate-topic but separating out the redering this way simplifies
+          ;; the testing. shr-render-buffer doesn't work well in --batch mode
+          ;; used for tests.
           (with-current-buffer discourse-topic-buffer-name
             (discourse-topic-mode)
             (switch-to-buffer discourse-topic-buffer-name)
             (goto-char (point-min))))
+      (message "No topic under point"))))
+
+(defun discourse-topic-get-topic-at-point ()
+  "Returns topic under point as json and marks it as read."
+  (interactive)
+  (let* ((topicid (get-text-property (point) 'discourse-nav)))
+    (if topicid
+        (progn
+          (discourse-topic-mark-as-read)
+          (discourse-api-get-topic (lambda (json) json) topicid t))
       (message "No topic under point"))))
 
 ;; TODO: integration test
